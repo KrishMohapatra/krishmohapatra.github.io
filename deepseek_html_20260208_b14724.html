@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insightful Blogger | A Platform for Writers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --gray-color: #7f8c8d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .blog-posts {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        /* Blog Post Cards */
+        .post-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .post-content {
+            padding: 1.5rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .post-excerpt {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        
+        .read-more {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Sidebar */
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        /* Add Guest Author Form */
+        #addAuthorForm {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Adsterra Ad Placeholder */
+        .ad-container {
+            background-color: #f1f1f1;
+            border: 2px dashed #ccc;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.7rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal for Policies */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .post-meta {
+                flex-direction: column;
+            }
+            
+            .post-date {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Insightful<span>Blogger</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" id="privacyPolicyBtn">Privacy Policy</a></li>
+                    <li><a href="#" id="termsBtn">Terms</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome to Insightful Blogger</h1>
+            <p>A platform where writers and guest authors share their thoughts, stories, and expertise on various topics. Join our community of passionate writers!</p>
+            <a href="#addAuthor" class="cta-button">Become a Guest Author</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Blog Posts Section -->
+        <section class="blog-posts" id="blog">
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Latest Blog Posts</h2>
+            
+            <!-- Blog Post 1 -->
+            <article class="post-card">
+                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Technology" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author" class="author-avatar">
+                            <div>
+                                <div class="author-name">Alex Johnson</div>
+                                <div class="author-role">Tech Writer</div>
+                            </div>
+                        </div>
+                        <div class="post-date">January 15, 2026</div>
+                    </div>
+                    <h3 class="post-title">The Future of Artificial Intelligence in Everyday Life</h3>
+                    <p class="post-excerpt">Discover how AI is transforming our daily routines, from smart homes to personalized recommendations. Learn about the latest advancements and what the future holds for this exciting technology.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Blog Post 2 -->
+            <article class="post-card">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Business" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author" class="author-avatar">
+                            <div>
+                                <div class="author-name">Sarah Williams</div>
+                                <div class="author-role">Business Consultant</div>
+                            </div>
+                        </div>
+                        <div class="post-date">June 10, 2023</div>
+                    </div>
+                    <h3 class="post-title">Sustainable Business Practices for the Modern World</h3>
+                    <p class="post-excerpt">Explore how companies can implement eco-friendly strategies while maintaining profitability. This guide covers everything from reducing carbon footprint to ethical supply chains.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Adsterra Ad Placeholder -->
+            <div class="ad-container">
+                <div class="ad-label">Adsterra Ad Placement</div>
+                <p>Advertisement space for Adsterra monetization</p>
+                <p style="font-size: 0.9rem; color: #777; margin-top: 0.5rem;">This is where your Adsterra ad code will be placed</p>
+            </div>
+            
+            <!-- Blog Post 3 -->
+            <article class="post-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Travel" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Author" class="author-avatar">
+                            <div>
+                                <div class="author-name">Michael Chen</div>
+                                <div class="author-role">Travel Blogger</div>
+                            </div>
+                        </div>
+                        <div class="post-date">January 5, 2026</div>
+                    </div>
+                    <h3 class="post-title">Hidden Gems: Off-the-Beaten-Path Destinations in Asia</h3>
+                    <p class="post-excerpt">Journey with us to discover lesser-known destinations in Asia that offer authentic experiences away from the tourist crowds. From remote villages to untouched natural wonders.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </section>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Add Guest Author Widget -->
+            <div class="sidebar-widget" id="addAuthor">
+                <h3 class="widget-title">Become a Guest Author</h3>
+                <p style="margin-bottom: 1rem;">Share your thoughts with our community! Add your details below:</p>
+                <form id="addAuthorForm">
+                    <div class="form-group">
+                        <label for="authorName">Full Name</label>
+                        <input type="text" id="authorName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="authorRole">Role/Profession</label>
+                        <input type="text" id="authorRole" placeholder="e.g., Writer, Expert, Enthusiast" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="authorImage">Profile Image URL</label>
+                        <input type="url" id="authorImage" placeholder="Paste image URL from online" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Add as Guest Author</button>
+                </form>
+                <div id="authorSuccess" style="display: none; margin-top: 1rem; padding: 0.8rem; background-color: #d4edda; color: #155724; border-radius: 4px;">
+                    Author added successfully! They will appear in the next blog post.
+                </div>
+            </div>
+            
+            <!-- Recent Authors Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Recent Guest Authors</h3>
+                <div class="recent-authors">
+                    <div class="author-item" style="display: flex; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Author" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                        <div>
+                            <div style="font-weight: 600;">Lisa Rodriguez</div>
+                            <div style="font-size: 0.9rem; color: #777;">Health & Wellness Coach</div>
+                        </div>
+                    </div>
+                    <div class="author-item" style="display: flex; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Author" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                        <div>
+                            <div style="font-weight: 600;">David Kim</div>
+                            <div style="font-size: 0.9rem; color: #777;">Financial Analyst</div>
+                        </div>
+                    </div>
+                    <div class="author-item" style="display: flex; align-items: center;">
+                        <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Author" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                        <div>
+                            <div style="font-weight: 600;">Maria Garcia</div>
+                            <div style="font-size: 0.9rem; color: #777;">Education Specialist</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Adsterra Sidebar Ad -->
+            <div class="sidebar-widget ad-container">
+                <div class="ad-label">Adsterra Sidebar Ad</div>
+                <p>Advertisement space for Adsterra monetization</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Insightful Blogger</h3>
+                    <p>A platform for writers and thinkers to share their perspectives with the world. Join our community of passionate authors.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#" id="privacyPolicyFooterBtn">Privacy Policy</a></li>
+                        <li><a href="#" id="termsFooterBtn">Terms of Service</a></li>
+                        <li><a href="#" id="disclaimerBtn">Disclaimer</a></li>
+                        <li><a href="#" id="cookiesBtn">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column" id="contact">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> krishmohapatra09@gamil.com</li>
+                        <li><i class="fas fa-phone"></i> +91 866585565</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Blog Street, Writer's City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; ©2026 Insightful Blogger. All rights reserved. | Monetized with Adsterra</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Privacy Policy</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Your Privacy Matters</h3>
+                <p>This privacy policy explains how Insightful Blogger collects, uses, and protects your personal information when you use our website.</p>
+                
+                <h4>Information We Collect</h4>
+                <p>We may collect personal information such as your name, email address, and profile image when you register as a guest author. We also collect non-personal information like browser type, operating system, and pages visited.</p>
+                
+                <h4>How We Use Your Information</h4>
+                <p>We use your information to:</p>
+                <ul>
+                    <li>Display your guest author profile on our blog</li>
+                    <li>Respond to your inquiries and provide customer support</li>
+                    <li>Improve our website and services</li>
+                    <li>Send periodic emails (you can unsubscribe at any time)</li>
+                </ul>
+                
+                <h4>Third-Party Services</h4>
+                <p>We use Adsterra for advertising on our website. Adsterra may use cookies and tracking technologies to serve personalized ads. Please review Adsterra's privacy policy for more information about their data practices.</p>
+                
+                <h4>Data Security</h4>
+                <p>We implement security measures to protect your personal information. However, no method of transmission over the internet is 100% secure.</p>
+                
+                <h4>Your Rights</h4>
+                <p>You have the right to access, correct, or delete your personal information. Contact us at privacy@insightfulblogger.com to exercise these rights.</p>
+                
+                <p>This policy was last updated on January 1, 2026.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Terms of Service</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Terms and Conditions</h3>
+                <p>By using the Insightful Blogger website, you agree to comply with and be bound by the following terms and conditions.</p>
+                
+                <h4>User Content</h4>
+                <p>As a guest author, you retain ownership of the content you submit. However, by submitting content, you grant us a worldwide, non-exclusive, royalty-free license to publish, display, and distribute your content on our website.</p>
+                
+                <h4>Prohibited Content</h4>
+                <p>You agree not to submit content that is:</p>
+                <ul>
+                    <li>Illegal, offensive, or defamatory</li>
+                    <li>Infringes on intellectual property rights</li>
+                    <li>Contains viruses or malicious code</li>
+                    <li>Violates any applicable laws or regulations</li>
+                </ul>
+                
+                <h4>Advertising</h4>
+                <p>Our website uses Adsterra for advertising. By using our site, you acknowledge that Adsterra may place cookies on your device and collect information about your browsing habits to serve personalized ads.</p>
+                
+                <h4>Limitation of Liability</h4>
+                <p>Insightful Blogger is not liable for any damages arising from your use of our website or the content published by guest authors.</p>
+                
+                <h4>Changes to Terms</h4>
+                <p>We reserve the right to modify these terms at any time. Continued use of the website after changes constitutes acceptance of the modified terms.</p>
+                
+                <p>If you have any questions about these terms, please contact us at krishmohapatra09@gamil.com.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add Guest Author Functionality
+        document.getElementById('addAuthorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const authorName = document.getElementById('authorName').value;
+            const authorRole = document.getElementById('authorRole').value;
+            const authorImage = document.getElementById('authorImage').value;
+            
+            // In a real application, you would send this data to a server
+            // For this demo, we'll just show a success message
+            const successMessage = document.getElementById('authorSuccess');
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('addAuthorForm').reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+            
+            console.log('New author added:', { authorName, authorRole, authorImage });
+        });
+        
+        // Modal Functionality
+        const privacyModal = document.getElementById('privacyModal');
+        const termsModal = document.getElementById('termsModal');
+        
+        // Open privacy policy modal
+        document.getElementById('privacyPolicyBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            privacyModal.style.display = 'block';
+        });
+        
+        document.getElementById('privacyPolicyFooterBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            privacyModal.style.display = 'block';
+        });
+        
+        // Open terms modal
+        document.getElementById('termsBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            termsModal.style.display = 'block';
+        });
+        
+        document.getElementById('termsFooterBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            termsModal.style.display = 'block';
+        });
+        
+        // Close modals when clicking the X
+        const closeButtons = document.querySelectorAll('.close-modal');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                privacyModal.style.display = 'none';
+                termsModal.style.display = 'none';
+            });
+        });
+        
+        // Close modals when clicking outside the modal content
+        window.addEventListener('click', function(e) {
+            if (e.target === privacyModal) {
+                privacyModal.style.display = 'none';
+            }
+            if (e.target === termsModal) {
+                termsModal.style.display = 'none';
+            }
+        });
+        
+        // Other policy links (simplified for demo)
+        document.getElementById('disclaimerBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("Disclaimer: The views expressed by guest authors are their own and do not necessarily reflect the views of Insightful Blogger.");
+        });
+        
+        document.getElementById('cookiesBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("Cookie Policy: We use cookies to improve your experience on our website. By continuing to browse, you consent to our use of cookies and Adsterra's advertising cookies.");
+        });
+    </script>
+</body>
+</html>
